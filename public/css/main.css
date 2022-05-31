@@ -63,6 +63,9 @@ main {
   width: 30%;
   min-width: 280px;
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card__header,

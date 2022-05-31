@@ -5,7 +5,7 @@ exports.getProducts = (req, res, next) => {
 		res.render('shop/product-list', {
 			prods: products,
 			pageTitle: 'All products',
-			path: '/product',
+			path: '/products',
 		});
 	});
 	// res.sendFile(path.join(rootDir, 'views', 'shop.html'));
