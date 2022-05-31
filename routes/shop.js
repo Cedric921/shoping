@@ -4,25 +4,16 @@ const path = require("path");
 const router = express.Router();
 const shopController = require('../controllers/shop')
 
-// / => GET
-router.get('/', shopController.getProducts);
+// / => GET public
+router.get('/', shopController.getIndex);
 
-/**
- *  GET /products 
- *  GET public
- */
-router.get('/products',);
+// /products => GET public
+router.get('/products',shopController.getProducts);
 
-/**
- *  GET /cart 
- *  GET public
- */
-router.get('/cart',);
+// /cart => GET public
+router.get('/cart', shopController.getCart);
 
-/**
- *  GET /products 
- *  GET public
- */
-router.get('/checkout',); 
+// /checkout => GET public
+router.get('/checkout',shopController.getCheckout); 
 
 module.exports = router;
