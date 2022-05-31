@@ -3,6 +3,22 @@
     <body>
         <%- include("../includes/navigation.ejs") %>
         <main class="centered">
-            <h1>Nothing for the moment</h1>
+            <h1><%= product.title %></h1>
+            <hr>
+            <div>
+                <img src="<%= product.imageUrl %>" alt="<%= product.title %>">
+            </div>
+            <h2>$<%= product.price %></h2>
+            <p>
+                <%= product.descriptions %>
+            </p>
+
+            <div class="card__actions">
+                <form action="/cart" method="POST">
+                    <input type="hidden" name="productId" value="<%= product.id %>">
+                    <button class="btn" type="submit">Add to Cart</button>
+                </form>
+            </div>
         </main>
 <%- include("../includes/end.ejs")%>
+

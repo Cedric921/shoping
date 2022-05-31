@@ -128,3 +128,9 @@ main {
   background-color: #00695c;
   color: white;
 }
+
+.centered {
+  width: 75%;
+  min-width: 300px;
+  text-align: center;
+}
