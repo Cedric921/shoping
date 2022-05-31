@@ -60,7 +60,8 @@ main {
 
 .card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  width: 30%;
+  width: 20%;
+  box-sizing: border-box;
   min-width: 280px;
   margin: 20px;
   display: flex;
@@ -126,4 +127,10 @@ main {
 .btn:active {
   background-color: #00695c;
   color: white;
+}
+
+.centered {
+  width: 75%;
+  min-width: 300px;
+  text-align: center;
 }
