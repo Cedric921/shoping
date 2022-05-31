@@ -75,6 +75,12 @@ main {
 .card__content h2,
 .card__content p {
   margin: 0;
+  text-align: center;
+}
+.card__header h1,
+.card__content h1,
+.card__content h2{
+  color: #00695c;
 }
 
 .card__image {
