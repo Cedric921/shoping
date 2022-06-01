@@ -49,11 +49,11 @@ exports.getCart = (req, res, next) => {
 					});
 				}
 			}
-		});
-		res.render('shop/cart', {
-			pageTitle: 'Your Cart',
-			path: '/cart',
-			products: cartsProducts
+			res.render('shop/cart', {
+				pageTitle: 'Your Cart',
+				path: '/cart',
+				products: cartsProducts,
+			});
 		});
 	});
 };
