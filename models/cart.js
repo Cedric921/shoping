@@ -29,7 +29,7 @@ module.exports = class Cart {
                 //we add the new product to our cart if no exist
                 cart.products = [...cart.products, updatedProduct];
             }
-            cart.totalPrice = cart.totalPrice + productPrice;
+            cart.totalPrice = cart.totalPrice + +productPrice;
             fs.writeFile(p, JSON.stringify(cart), (err) => {
                 console.log(err);
             })
