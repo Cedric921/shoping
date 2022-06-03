@@ -22,4 +22,6 @@ app.use(shopRoutes);
 //404
 app.use(notFoundController.get404Page);
 
-app.listen(3000);
+app.listen(3000, () => {
+    console.log("server run at port 3000");
+});

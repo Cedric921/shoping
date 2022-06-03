@@ -15,11 +15,10 @@ exports.getProducts = (req, res, next) => {
 exports.getProductsById = (req, res, next) => {
 	const prodId = req.params.productId;
 	Product.findById(prodId, (result) => {
-		console.log(result);
 		res.render('shop/product-detail', {
 			product: result,
 			pageTitle: result.title,
-			path: 'product-detail' + result.id,
+			path: '/product-detail/' + result.id,
 		});
 	});
 };
@@ -60,11 +59,11 @@ exports.getCart = (req, res, next) => {
 
 exports.postCartDeleteProduct = (req, res, next) => {
 	const prodId = req.body.productId;
-	Product.findById(prodId, product => {
+	Product.findById(prodId, (product) => {
 		Cart.deleteProduct(prodId, product.price);
 		res.redirect('/cart');
-	})
-}
+	});
+};
 
 exports.postCart = (req, res, next) => {
 	const prodId = req.body.productId;
