@@ -2,13 +2,13 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
-	Product.fetchAll((products) => {
+	Product.fetchAll().then(([data, header]) => {
 		res.render('shop/product-list', {
-			prods: products,
+			prods: data,
 			pageTitle: 'All products',
 			path: '/products',
 		});
-	});
+	}).catch((error) => console.error(error));
 	// res.sendFile(path.join(rootDir, 'views', 'shop.html'));
 };
 
