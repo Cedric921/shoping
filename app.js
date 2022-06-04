@@ -9,6 +9,17 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+
+
+//our connectioon to database
+const db = require('./utils/database');
+db.execute("SELECT * FROM products")
+    .then((result) => {
+        console.log(result[0]);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 //controllers
 const notFoundController = require('./controllers/404');
 
