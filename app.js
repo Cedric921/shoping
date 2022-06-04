@@ -9,6 +9,17 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+
+
+//our connectioon to database
+const db = require('./utils/database');
+db.execute("SELECT * FROM products")
+    .then((result) => {
+        console.log(result[0]);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
 //controllers
 const notFoundController = require('./controllers/404');
 
@@ -22,4 +33,6 @@ app.use(shopRoutes);
 //404
 app.use(notFoundController.get404Page);
 
-app.listen(3000);
+app.listen(3000, () => {
+    console.log("server run at port 3000");
+});
