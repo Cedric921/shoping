@@ -11,11 +11,11 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
 //our connectioon to database
-const dsequelize = require('./utils/database');
+const sequelize = require('./utils/database');
 
 //controllers
 const notFoundController = require('./controllers/404');
-const sequelize = require('./utils/database');
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 //for static (public files) files like js, css
