@@ -10,7 +10,7 @@ exports.getProducts = (req, res, next) => {
 				path: '/products',
 			});
 		})
-		.catch((error) => console.error(error));
+		.catch((error) => console.error(error)); 
 	// res.sendFile(path.join(rootDir, 'views', 'shop.html'));
 };
 
