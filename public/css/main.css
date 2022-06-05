@@ -134,3 +134,7 @@ main {
   min-width: 300px;
   text-align: center;
 }
+
+.centered img{
+  height: 15rem;
+}
