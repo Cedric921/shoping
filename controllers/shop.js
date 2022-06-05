@@ -3,21 +3,21 @@ const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
 	Product.findAll()
-		.then(products => {
+		.then((products) => {
 			res.render('shop/product-list', {
 				prods: products,
 				pageTitle: 'All products',
 				path: '/products',
 			});
 		})
-		.catch((error) => console.error(error)); 
+		.catch((error) => console.error(error));
 	// res.sendFile(path.join(rootDir, 'views', 'shop.html'));
 };
 
 exports.getProductsById = (req, res, next) => {
 	const prodId = req.params.productId;
 	Product.findOne({ where: { id: prodId } })
-		.then(product => {
+		.then((product) => {
 			res.render('shop/product-detail', {
 				product: product,
 				pageTitle: product.title,
@@ -29,7 +29,7 @@ exports.getProductsById = (req, res, next) => {
 
 exports.getIndex = (req, res, next) => {
 	Product.findAll()
-		.then(products => {
+		.then((products) => {
 			res.render('shop/index', {
 				prods: products,
 				pageTitle: 'Shop',
