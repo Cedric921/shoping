@@ -30,7 +30,7 @@ app.use(notFoundController.get404Page);
 sequelize
 	.sync()
 	.then((result) => {
-        console.log(result);
+        // console.log(result);
         app.listen(3000);
 	})
 	.catch((error) => {
