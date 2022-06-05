@@ -61,7 +61,10 @@ exports.postEditProduct = (req, res, next) => {
 			product.price = updatedPrice;
 			product.imageUrl = updatedImageUrl;
 			product.description = updatedDescription;
-			product.save();
+			return product.save();
+		})
+		.then((result) => {
+			console.log('UPDATED PRODUCT', result);
 			res.redirect('/admin/products');
 		})
 		.catch((error) => console.log(error));
@@ -82,6 +85,13 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
 	const prodId = req.body.productId;
-	Product.deleteById(prodId);
-	res.redirect('/admin/products');
+	Product.findOne({ where: { id: prodId } })
+		.then((product) => {
+			return product.destroy();
+		})
+		.then(result => {
+			console.log("PRODUCT DESTROYED", result);
+			res.redirect('/admin/products');
+		})
+		.catch((error) => console.log(error));
 };
