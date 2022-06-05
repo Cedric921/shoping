@@ -62,13 +62,13 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-	Product.fetchAll((products) => {
+	Product.findAll().then((products) => {
 		res.render('admin/products', {
 			prods: products,
 			pageTitle: 'Admin products',
 			path: '/admin/products',
 		});
-	});
+	}).catch(error=> console.log(error));
 	// res.sendFile(path.join(rootDir, 'views', 'shop.html'));
 };
 
