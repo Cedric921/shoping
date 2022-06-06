@@ -42,27 +42,32 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-	Cart.getCart((cart) => {
-		Product.fetchAll((products) => {
-			const cartsProducts = [];
-			for (let product of products) {
-				const cartProductData = cart.products.find(
-					(prod) => prod.id === product.id
-				);
-				if (cartProductData) {
-					cartsProducts.push({
-						productData: product,
-						qty: cartProductData.qty,
-					});
-				}
-			}
-			res.render('shop/cart', {
-				pageTitle: 'Your Cart',
-				path: '/cart',
-				products: cartsProducts,
-			});
-		});
-	});
+	req.user.getCart()
+		.then(cart => {
+			console.log(cart);
+		})
+		.catch(err => console.log(err))
+	// Cart.getCart((cart) => {
+	// 	Product.fetchAll((products) => {
+	// 		const cartsProducts = [];
+	// 		for (let product of products) {
+	// 			const cartProductData = cart.products.find(
+	// 				(prod) => prod.id === product.id
+	// 			);
+	// 			if (cartProductData) {
+	// 				cartsProducts.push({
+	// 					productData: product,
+	// 					qty: cartProductData.qty,
+	// 				});
+	// 			}
+	// 		}
+	// 		res.render('shop/cart', {
+	// 			pageTitle: 'Your Cart',
+	// 			path: '/cart',
+	// 			products: cartsProducts,
+	// 		});
+	// 	});
+	// });
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
