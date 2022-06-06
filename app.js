@@ -22,6 +22,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //for static (public files) files like js, css
 app.use(express.static(path.join(__dirname, 'public')));
 
+//first we look for a user for all routes
+app.use((req, res, next) => {
+	User.findOne({ where: { id: 1 } })
+		.then((user) => {
+			req.user = user;
+			next();
+		})
+		.catch((error) => console.error(error));
+});
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
@@ -43,7 +53,7 @@ sequelize
 		return user;
 	})
 	.then((response) => {
-		console.log(response);
+		// console.log(response);
 		app.listen(3000);
 	})
 	.catch((error) => {
