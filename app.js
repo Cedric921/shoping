@@ -28,10 +28,11 @@ app.use(shopRoutes);
 //404
 app.use(notFoundController.get404Page);
 
-Product.belongsTo(User);
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
+User.hasMany(Product);
 
 sequelize
-	.sync()
+	.sync({ force: false})
 	.then((result) => {
 		// console.log(result);
 		app.listen(3000);
