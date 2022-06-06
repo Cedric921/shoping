@@ -12,10 +12,11 @@ const shopRoutes = require('./routes/shop');
 
 //our connectioon to database
 const sequelize = require('./utils/database');
+const Product = require('./models/product');
+const User = require('./models/user');
 
 //controllers
 const notFoundController = require('./controllers/404');
-
 
 app.use(bodyParser.urlencoded({ extended: false }));
 //for static (public files) files like js, css
@@ -27,11 +28,13 @@ app.use(shopRoutes);
 //404
 app.use(notFoundController.get404Page);
 
+Product.belongsTo(User);
+
 sequelize
 	.sync()
 	.then((result) => {
-        // console.log(result);
-        app.listen(3000);
+		// console.log(result);
+		app.listen(3000);
 	})
 	.catch((error) => {
 		console.log(error);
