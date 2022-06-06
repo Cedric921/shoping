@@ -71,7 +71,6 @@ exports.postEditProduct = (req, res, next) => {
 			product.price = updatedPrice;
 			product.imageUrl = updatedImageUrl;
 			product.description = updatedDescription;
-			product.userId = req.user.id;
 			return product.save();
 		})
 		.then((result) => {
@@ -82,7 +81,8 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-	Product.findAll()
+	req.user.getProducts()
+	// Product.findAll()
 		.then((products) => {
 			res.render('admin/products', {
 				prods: products,
