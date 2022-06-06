@@ -52,8 +52,8 @@ sequelize
 		}
 		return user;
 	})
-	.then((response) => {
-		// console.log(response);
+	.then((user) => {
+		// console.log(user);
 		app.listen(3000);
 	})
 	.catch((error) => {
