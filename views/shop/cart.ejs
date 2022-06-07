@@ -18,8 +18,11 @@
                 </li>
             <% }) %> 
         </ul>
-        <div>
-            <h3>Total price: <%= products.price%></h3>
+        <hr>
+        <div class="centered2">
+            <form action="/create-order" method="POST" class="">
+                <button type="submit" class="btn">Order now</button>
+            </form>
         </div>
         <% } else { %>
             <h1>No products in cart</h1>
