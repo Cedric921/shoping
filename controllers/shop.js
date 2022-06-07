@@ -104,9 +104,15 @@ exports.postCart = (req, res, next) => {
 			}
 			let newQuantity = 1;
 			if (product) {
-				//
+				//if it is  an old product
+				const oldQuantity = product.cartItem.quantity;
+				newQuantity = oldQuantity + 1;
+				return fetchedCart.addProduct(product, {
+					through: { quantity: newQuantity },
+				});
 			}
 
+			// if it is a new product to cart
 			return Product.findOne({ where: { id: prodId } })
 				.then((product) => {
 					return fetchedCart.addProduct(product, {
@@ -114,12 +120,9 @@ exports.postCart = (req, res, next) => {
 					});
 				})
 				.catch((err) => console.error(err));
-			// else {
-			// 	product = [];
-			// }
 		})
 		.then(() => {
-			res.redirect('/cart');   
+			res.redirect('/cart');
 		})
 		.catch((error) => console.error(error));
 };
