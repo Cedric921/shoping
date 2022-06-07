@@ -1,5 +1,5 @@
 const Product = require('../models/product');
-const Cart = require('../models/cart');
+const Order = require('../models/order');
 
 exports.getProducts = (req, res, next) => {
 	Product.findAll()
@@ -142,7 +142,18 @@ exports.postOrder = (req, res, next) => {
 			return cart.getProducts();
 		})
 		.then((products) => {
-			console.log(products);
+			return req.user.createOrder().then((order) => {
+				// order.addProducts(products, { through: { quantity } });
+				return order.addProducts(
+					products.map((product) => {
+						product.orderItem = { quantity: product.cartItem.quantity };
+						return product;
+					})
+				);
+			});
+		})
+		.then(result => {
+			res.redirect('/orders');
 		})
 		.catch((error) => console.error(error));
 };
