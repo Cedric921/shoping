@@ -135,6 +135,18 @@ exports.postCartDeleteProduct = (req, res, next) => {
 		.catch((err) => console.error(err));
 };
 
+exports.postOrder = (req, res, next) => {
+	req.user
+		.getCart()
+		.then((cart) => {
+			return cart.getProducts();
+		})
+		.then((products) => {
+			console.log(products);
+		})
+		.catch((error) => console.error(error));
+};
+
 exports.getOrders = (req, res, next) => {
 	res.render('shop/orders', {
 		pageTitle: 'Your Orders',
