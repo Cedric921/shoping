@@ -118,6 +118,9 @@ exports.postCart = (req, res, next) => {
 			// 	product = [];
 			// }
 		})
+		.then(() => {
+			res.redirect('/cart');   
+		})
 		.catch((error) => console.error(error));
 };
 
