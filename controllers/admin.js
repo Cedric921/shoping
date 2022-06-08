@@ -86,15 +86,12 @@ exports.getProducts = (req, res, next) => {
 	// res.sendFile(path.join(rootDir, 'views', 'shop.html'));
 };
 
-// exports.postDeleteProduct = (req, res, next) => {
-// 	const prodId = req.body.productId;
-// 	Product.findOne({ where: { id: prodId } })
-// 		.then((product) => {
-// 			return product.destroy();
-// 		})
-// 		.then((result) => {
-// 			console.log('PRODUCT DESTROYED', result);
-// 			res.redirect('/admin/products');
-// 		})
-// 		.catch((error) => console.log(error));
-// };
+exports.postDeleteProduct = (req, res, next) => {
+	const prodId = req.body.productId;
+	Product.findByIdAndRemove(prodId)
+		.then(() => {
+			console.log('PRODUCT DESTROYED');
+			res.redirect('/admin/products');
+		})
+		.catch((error) => console.log(error));
+};
