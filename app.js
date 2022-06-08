@@ -8,7 +8,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin'); 
-// const shopRoutes = require('./routes/shop');
+const shopRoutes = require('./routes/shop');
 
 //our connectioon to database
 const mongoose = require('mongoose');
@@ -25,13 +25,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 
 app.use('/admin', adminRoutes);
-// // app.use(shopRoutes);
+app.use(shopRoutes);
 
 // //404
 app.use(notFoundController.get404Page);
 
 const monngodb_url =
-	'mongodb+srv://cedric921:zehxQ3id!$WfJx5@cluster0.xosd8.mongodb.net/shop?retryWrites=true&w=majority';
+	'mongodb://localhost:27017/shop';
 
 mongoose
 	.connect(monngodb_url, { useNewUrlParser: true, useUnifiedTopology: true })
