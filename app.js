@@ -7,8 +7,10 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-const adminRoutes = require('./routes/admin'); 
+const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+//user model
+const User = require('./models/user');
 
 //our connectioon to database
 const mongoose = require('mongoose');
@@ -20,9 +22,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //first we look for a user for all routes
-// app.use((req, res, next) => {
-// 	next();
-// });
+app.use((req, res, next) => {
+	User.findById('62a100a4c1f455a430556d6d')
+		.then((user) => {
+			// req.user = new User(user.name, user.email, user.cart, user._id);
+			req.user = user;
+			next();
+		})
+		.catch((error) => console.log(error));
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -30,13 +38,25 @@ app.use(shopRoutes);
 // //404
 app.use(notFoundController.get404Page);
 
-const monngodb_url =
-	'mongodb://localhost:27017/shop';
+const monngodb_url = 'mongodb://localhost:27017/shop';
 
 mongoose
 	.connect(monngodb_url, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
+		User.findOne().then(user => {
+			if (!user) {
+				const user = new User({
+					name: 'cedric karungu',
+					email: 'test@tes.com',
+					cart: {
+						items: [],
+					},
+				});
+				user.save();
+			}
+		})
 		console.log('mongodb is connected');
+		
 		app.listen(3000);
 	})
 	.catch((error) => {
