@@ -47,7 +47,7 @@ mongoose
 			if (!user) {
 				const user = new User({
 					name: 'cedric karungu',
-					email: 'test@tes.com',
+					email: 'vb@test.com',
 					cart: {
 						items: [],
 					},

@@ -76,7 +76,9 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
 	Product.find()
+		.populate('userId', 'name email')
 		.then((products) => {
+			console.log(products);
 			res.render('admin/products', {
 				prods: products,
 				pageTitle: 'Admin products',
@@ -84,6 +86,7 @@ exports.getProducts = (req, res, next) => {
 			});
 		})
 		.catch((error) => console.log(error));
+	/**with populate with specifie wich column we need to have in our result */
 	// res.sendFile(path.join(rootDir, 'views', 'shop.html'));
 };
 
