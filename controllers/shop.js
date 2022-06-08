@@ -15,18 +15,18 @@ exports.getProducts = (req, res, next) => {
 	// res.sendFile(path.join(rootDir, 'views', 'shop.html'));
 };
 
-// exports.getProductsById = (req, res, next) => {
-// 	const prodId = req.params.productId;
-// 	Product.findOne({ where: { id: prodId } })
-// 		.then((product) => {
-// 			res.render('shop/product-detail', {
-// 				product: product,
-// 				pageTitle: product.title,
-// 				path: '/product-detail/' + product.id,
-// 			});
-// 		})
-// 		.catch((error) => console.error(error));
-// };
+exports.getProductsById = (req, res, next) => {
+	const prodId = req.params.productId;
+	Product.findById(prodId)
+		.then((product) => {
+			res.render('shop/product-detail', {
+				product: product,
+				pageTitle: product.title,
+				path: '/product-detail/' + product.id,
+			});
+		})
+		.catch((error) => console.error(error));
+};
 
 exports.getIndex = (req, res, next) => {
 	Product.find()
