@@ -7,16 +7,16 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-const adminRoutes = require('./routes/admin');
+// const adminRoutes = require('./routes/admin');
 // const shopRoutes = require('./routes/shop');
 
 //our connectioon to database
-const mongoConnect = require('./utils/database').mongoConnect;
+const mongoose = require('mongoose');
 
 //controllers
-const notFoundController = require('./controllers/404');
+// const notFoundController = require('./controllers/404');
 
-// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 //for static (public files) files like js, css
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -25,12 +25,21 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+// app.use('/admin', adminRoutes);
+// // app.use(shopRoutes);
 
-//404
-app.use(notFoundController.get404Page);
+// //404
+// app.use(notFoundController.get404Page);
 
-mongoConnect(() => {
-	app.listen(3000);
-});
+const monngodb_url =
+	'mongodb+srv://cedric921:zehxQ3id!$WfJx5@cluster0.xosd8.mongodb.net/shop?retryWrites=true&w=majority';
+
+mongoose
+	.connect(monngodb_url, { useNewUrlParser: true, useUnifiedTopology: true })
+	.then(() => {
+		console.log('mongodb is connected');
+	})
+	.catch((error) => {
+		console.log('mondb not connected');
+		console.log(error);
+	});

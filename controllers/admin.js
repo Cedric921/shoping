@@ -1,12 +1,12 @@
 const Product = require('../models/product');
 
-// exports.getAddProduct = (req, res, next) => {
-// 	res.render('admin/edit-product', {
-// 		pageTitle: 'Add product',
-// 		path: '/admin/add-product',
-// 		editing: false,
-// 	});
-// };
+exports.getAddProduct = (req, res, next) => {
+	res.render('admin/edit-product', {
+		pageTitle: 'Add product',
+		path: '/admin/add-product',
+		editing: false,
+	});
+};
 
 exports.postAddProduct = (req, res, next) => {
 	const title = req.body.title;
@@ -17,7 +17,7 @@ exports.postAddProduct = (req, res, next) => {
 	product
 		.save()
 		.then((result) => {
-			console.log('product created');
+			console.log('product created', result);
 			res.redirect('/admin/products');
 		})
 		.catch((error) => {
