@@ -21,12 +21,12 @@ router.post('/cart', shopController.postCart);
 
 router.post('/cart-delete-item', shopController.postCartDeleteProduct);
 
-router.post('/create-order', shopController.postOrder);
+// router.post('/create-order', shopController.postOrder);
 
-// /orders => GET public
-router.get('/orders', shopController.getOrders);
+// // /orders => GET public
+// router.get('/orders', shopController.getOrders);
 
-// /checkout => GET public
-router.get('/checkout', shopController.getCheckout);
+// // /checkout => GET public
+// router.get('/checkout', shopController.getCheckout);
 
 module.exports = router;
