@@ -13,8 +13,8 @@ router.get('/products', shopController.getProducts);
 // /products/123 => GET public
 router.get('/products/:productId', shopController.getProductsById);
 
-// // /cart => GET public
-// router.get('/cart', shopController.getCart);
+// /cart => GET public
+router.get('/cart', shopController.getCart);
 
 // /cart => POST private
 router.post('/cart', shopController.postCart);
