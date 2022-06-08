@@ -13,7 +13,12 @@ exports.postAddProduct = (req, res, next) => {
 	const imageUrl = req.body.imageUrl;
 	const descriptions = req.body.descriptions;
 	const price = req.body.price;
-	const product = new Product({ title: title, imageUrl: imageUrl, price : price, description: descriptions });
+	const product = new Product({
+		title: title,
+		imageUrl: imageUrl,
+		price: price,
+		description: descriptions,
+	});
 	product
 		.save()
 		.then((result) => {
@@ -46,27 +51,27 @@ exports.getEditProduct = (req, res, next) => {
 		.catch((error) => console.log(error));
 };
 
-// exports.postEditProduct = (req, res, next) => {
-// 	const prodId = req.body.productId;
-// 	const updatedTitle = req.body.title;
-// 	const updatedPrice = req.body.price;
-// 	const updatedImageUrl = req.body.imageUrl;
-// 	const updatedDescription = req.body.descriptions;
+exports.postEditProduct = (req, res, next) => {
+	const prodId = req.body.productId;
+	const updatedTitle = req.body.title;
+	const updatedPrice = req.body.price;
+	const updatedImageUrl = req.body.imageUrl;
+	const updatedDescription = req.body.descriptions;
+	Product.findById(prodId)
+		.then((product) => {
+			product.title = updatedTitle;
+			product.price = updatedPrice;
+			product.imageUrl = updatedImageUrl;
+			product.description = updatedDescription;
+			return product.save();
+		})
 
-// 	Product.findOne({ where: { id: prodId } })
-// 		.then((product) => {
-// 			product.title = updatedTitle;
-// 			product.price = updatedPrice;
-// 			product.imageUrl = updatedImageUrl;
-// 			product.description = updatedDescription;
-// 			return product.save();
-// 		})
-// 		.then((result) => {
-// 			console.log('UPDATED PRODUCT', result);
-// 			res.redirect('/admin/products');
-// 		})
-// 		.catch((error) => console.log(error));
-// };
+		.then((result) => {
+			console.log('UPDATED PRODUCT', result);
+			res.redirect('/admin/products');
+		})
+		.catch((error) => console.log(error));
+};
 
 exports.getProducts = (req, res, next) => {
 	Product.find()
