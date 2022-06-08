@@ -70,22 +70,15 @@ exports.postCart = (req, res, next) => {
 		.catch((error) => console.error(error));
 };
 
-// exports.postCartDeleteProduct = (req, res, next) => {
-// 	const prodId = req.body.productId;
-// 	req.user
-// 		.getCart()
-// 		.then((cart) => {
-// 			return cart.getProducts({ where: { id: prodId } });
-// 		})
-// 		.then((preoducts) => {
-// 			const product = preoducts[0];
-// 			product.cartItem.destroy();
-// 		})
-// 		.then((result) => {
-// 			res.redirect('/cart');
-// 		})
-// 		.catch((err) => console.error(err));
-// };
+exports.postCartDeleteProduct = (req, res, next) => {
+	const prodId = req.body.productId;
+	req.user
+		.removeFromCart(prodId)
+		.then((result) => {
+			res.redirect('/cart');
+		})
+		.catch((err) => console.error(err));
+};
 
 // exports.postOrder = (req, res, next) => {
 // 	let fetchedCart;
