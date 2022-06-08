@@ -25,29 +25,27 @@ exports.postAddProduct = (req, res, next) => {
 		});
 };
 
-// exports.getEditProduct = (req, res, next) => {
-// 	const editMode = req.query.edit;
-// 	if (!editMode) {
-// 		res.redirect('/');
-// 	}
-// 	const productId = req.params.productId;
-// 	req.user
-// 		.getProducts({ where: { id: productId } })
-// 		// Product.findOne({ where: { id: productId } })
-// 		.then((products) => {
-// 			const product = products[0];
-// 			if (!product) {
-// 				return res.redirect('/');
-// 			}
-// 			res.render('admin/edit-product', {
-// 				pageTitle: 'Add product',
-// 				path: '/admin/edit-product',
-// 				editing: editMode,
-// 				product: product,
-// 			});
-// 		})
-// 		.catch((error) => console.log(error));
-// };
+exports.getEditProduct = (req, res, next) => {
+	const editMode = req.query.edit;
+	if (!editMode) {
+		res.redirect('/');
+	}
+	const productId = req.params.productId;
+	Product.findById(productId)
+		.then((products) => {
+			const product = products[0];
+			if (!product) {
+				return res.redirect('/');
+			}
+			res.render('admin/edit-product', {
+				pageTitle: 'Add product',
+				path: '/admin/edit-product',
+				editing: editMode,
+				product: product,
+			});
+		})
+		.catch((error) => console.log(error));
+};
 
 // exports.postEditProduct = (req, res, next) => {
 // 	const prodId = req.body.productId;
@@ -71,20 +69,18 @@ exports.postAddProduct = (req, res, next) => {
 // 		.catch((error) => console.log(error));
 // };
 
-// exports.getProducts = (req, res, next) => {
-// 	req.user
-// 		.getProducts()
-// 		// Product.findAll()
-// 		.then((products) => {
-// 			res.render('admin/products', {
-// 				prods: products,
-// 				pageTitle: 'Admin products',
-// 				path: '/admin/products',
-// 			});
-// 		})
-// 		.catch((error) => console.log(error));
-// 	// res.sendFile(path.join(rootDir, 'views', 'shop.html'));
-// };
+exports.getProducts = (req, res, next) => {
+	Product.find()
+		.then((products) => {
+			res.render('admin/products', {
+				prods: products,
+				pageTitle: 'Admin products',
+				path: '/admin/products',
+			});
+		})
+		.catch((error) => console.log(error));
+	// res.sendFile(path.join(rootDir, 'views', 'shop.html'));
+};
 
 // exports.postDeleteProduct = (req, res, next) => {
 // 	const prodId = req.body.productId;
