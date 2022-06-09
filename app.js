@@ -10,9 +10,9 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const authRoutes = required('./routes/auth.js');
 //user model
 const User = require('./models/user');
-
 
 //controllers
 const notFoundController = require('./controllers/404');
@@ -33,6 +33,7 @@ app.use((req, res, next) => {
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
+app.use(authRoutes);
 
 //404
 app.use(notFoundController.get404Page);
@@ -42,7 +43,7 @@ const monngodb_url = 'mongodb://localhost:27017/shop';
 mongoose
 	.connect(monngodb_url, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
-		User.findOne().then(user => {
+		User.findOne().then((user) => {
 			if (!user) {
 				const user = new User({
 					name: 'cedric karungu',
@@ -53,9 +54,9 @@ mongoose
 				});
 				user.save();
 			}
-		})
+		});
 		console.log('mongodb is connected');
-		
+
 		app.listen(3000);
 	})
 	.catch((error) => {
