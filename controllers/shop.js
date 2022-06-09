@@ -105,19 +105,17 @@ exports.postOrder = (req, res, next) => {
 		.catch((error) => console.error(error));
 };
 
-// exports.getOrders = (req, res, next) => {
-// 	req.user
-// 		.getOrders({ include: ['products']})
-// 		.then(orders => {
-// 			res.render('shop/orders', {
-// 				pageTitle: 'Your Orders',
-// 				path: '/orders',
-// 				orders: orders
-// 			});
-// 		})
-// 		.catch((err) => console.error(err));
-
-// };
+exports.getOrders = (req, res, next) => {
+	Order.find({ 'user.userId': req.user._id })
+		.then((orders) => {
+			res.render('shop/orders', {
+				pageTitle: 'Your Orders',
+				path: '/orders',
+				orders: orders,
+			});
+		})
+		.catch((err) => console.error(err));
+};
 
 // exports.getCheckout = (req, res, next) => {
 // 	res.render('shop/checkout', {
