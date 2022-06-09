@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -12,8 +13,6 @@ const shopRoutes = require('./routes/shop');
 //user model
 const User = require('./models/user');
 
-//our connectioon to database
-const mongoose = require('mongoose');
 
 //controllers
 const notFoundController = require('./controllers/404');
@@ -35,7 +34,7 @@ app.use((req, res, next) => {
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-// //404
+//404
 app.use(notFoundController.get404Page);
 
 const monngodb_url = 'mongodb://localhost:27017/shop';

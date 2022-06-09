@@ -31,9 +31,11 @@ userSchema.methods.addToCart = function (product) {
 	const updatedCartItems = [...this.cart.items];
 
 	if (cartProductIndex >= 0) {
+		//existing item on the cart
 		newQuantity = this.cart.items[cartProductIndex].quantity + 1;
 		updatedCartItems[cartProductIndex].quantity = newQuantity;
 	} else {
+		//new item on the cart
 		updatedCartItems.push({
 			productId: product._id,
 			quantity : newQuantity
