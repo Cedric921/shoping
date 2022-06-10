@@ -236,6 +236,13 @@ form {
   color: white;
 }
 
+.product-form {
+  width: 20rem;
+  max-width: 90%;
+  margin: auto;
+  display: block;
+}
+
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;
