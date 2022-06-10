@@ -1,4 +1,4 @@
-.login-form {
+.login-form, .product-form {
   width: 20rem;
   max-width: 90%;
   margin: auto;
