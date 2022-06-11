@@ -4,14 +4,15 @@ exports.getLogin = (req, res, next) => {
 	res.render('auth/login', {
 		pageTitle: 'Login',
 		path: '/login',
-		isAuthenticated: req.session.isLoggedIn,
+		isAuthenticated: false,
 	});
 };
 
 exports.getSignup = (req, res, next) => {
-	req.session.destroy((err) => {
-		console.log(err);
-		res.redirect('/');
+	res.render('auth/signup', {
+		pageTitle: 'Signup',
+		path: '/signup',
+		isAuthenticated: false,
 	});
 };
 
@@ -29,14 +30,22 @@ exports.postLogin = (req, res, next) => {
 		.catch((err) => console.log(err));
 };
 
-
 exports.postSignup = (req, res, next) => {
-	req.session.destroy((err) => {
-		console.log(err);
-		res.redirect('/');
-	});
+	const email = req.body.email;
+	const password = req.body.password;
+	const confirmPassword = req.body.confirmPassword;
+	User.findOne({ email: email })
+		.then((userDoc) => {
+			if (userDoc) {
+				return res.render('/login');
+			}
+			const user = new User({
+				email: email,
+				password: password,
+			});
+		})
+		.catch((err) => console.log(err));
 };
-
 
 exports.postLogout = (req, res, next) => {
 	req.session.destroy((err) => {
@@ -44,5 +53,3 @@ exports.postLogout = (req, res, next) => {
 		res.redirect('/');
 	});
 };
-
-
