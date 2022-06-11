@@ -9,7 +9,7 @@ exports.getProducts = (req, res, next) => {
 				prods: products,
 				pageTitle: 'All products',
 				path: '/products',
-				isAuthenticated: req.isLoggedIn,
+				isAuthenticated: req.session.isLoggedIn,
 			});
 		})
 		.catch((error) => console.error(error));
@@ -24,7 +24,7 @@ exports.getProductsById = (req, res, next) => {
 				product: product,
 				pageTitle: product.title,
 				path: '/product-detail/' + product.id,
-				isAuthenticated: req.isLoggedIn,
+				isAuthenticated: req.session.isLoggedIn,
 			});
 		})
 		.catch((error) => console.error(error));
@@ -37,7 +37,7 @@ exports.getIndex = (req, res, next) => {
 				prods: products,
 				pageTitle: 'Shop',
 				path: '/',
-				isAuthenticated: req.isLoggedIn,
+				isAuthenticated: req.session.isLoggedIn,
 			});
 		})
 		.catch((err) => {
@@ -46,7 +46,7 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-	req.user
+	req.session.user
 		.populate('cart.items.productId')
 		// .execPopulate()
 		.then((user) => {
@@ -55,7 +55,7 @@ exports.getCart = (req, res, next) => {
 				pageTitle: 'Your Cart',
 				path: '/cart',
 				products: products,
-				isAuthenticated: req.isLoggedIn,
+				isAuthenticated: req.session.isLoggedIn,
 			});
 		})
 		.catch((error) => console.error(error));
@@ -76,7 +76,7 @@ exports.postCart = (req, res, next) => {
 
 exports.postCartDeleteProduct = (req, res, next) => {
 	const prodId = req.body.productId;
-	req.user
+	req.session.user
 		.removeFromCart(prodId)
 		.then((result) => {
 			res.redirect('/cart');
@@ -85,7 +85,7 @@ exports.postCartDeleteProduct = (req, res, next) => {
 };
 
 exports.postOrder = (req, res, next) => {
-	req.user
+	req.session.user
 		.populate('cart.items.productId')
 		.then((user) => {
 			const products = user.cart.items.map((i) => {
@@ -116,7 +116,7 @@ exports.getOrders = (req, res, next) => {
 				pageTitle: 'Your Orders',
 				path: '/orders',
 				orders: orders,
-				isAuthenticated: req.isLoggedIn,
+				isAuthenticated: req.session.isLoggedIn,
 			});
 		})
 		.catch((err) => console.error(err));

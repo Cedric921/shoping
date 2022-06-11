@@ -14,7 +14,9 @@
             </p>
 
             <div class="card__actions">
-                <%- include("../includes/add-to-cart.ejs")%>
+                <% if (isAuthenticated) { %>
+                    <%- include("../includes/add-to-cart.ejs", { product: product})%>
+                <% } %>
             </div>
         </main>
 <%- include("../includes/end.ejs")%>
