@@ -105,7 +105,7 @@ exports.postOrder = (req, res, next) => {
 		.then((response) => {
 			return req.user.clearCart();
 		})
-		.then((res) => {
+		.then((result) => {
 			res.redirect('/orders');
 		})
 		.catch((error) => console.error(error));

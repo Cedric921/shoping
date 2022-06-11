@@ -37,6 +37,9 @@ app.use(
 );
 
 app.use((req, res, next) => {
+	if (!req.session.user) {
+		return next();
+	}
 	User.findById(req.session.user._id)
 		.then((user) => {
 			req.user = user;
@@ -49,7 +52,6 @@ app.use((req, res, next) => {
 app.use((req, res, next) => {
 	User.findById('62a4520bfa2e37e0ecde2a63')
 		.then((user) => {
-			// req.user = new User(user.name, user.email, user.cart, user._id);
 			req.user = user;
 			next();
 		})
