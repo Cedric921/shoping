@@ -32,13 +32,22 @@ app.use(
 		secret: 'cedric karungu geek secret',
 		resave: false,
 		saveUninitialized: false,
-		store: store
+		store: store,
 	})
 );
 
+app.use((req, res, next) => {
+	User.findById(req.session.user._id)
+		.then((user) => {
+			req.user = user;
+			next();
+		})
+		.catch((err) => console.log(err));
+});
+
 //first we look for a user for all routes
 app.use((req, res, next) => {
-	User.findById('62a100a4c1f455a430556d6d')
+	User.findById('62a4520bfa2e37e0ecde2a63')
 		.then((user) => {
 			// req.user = new User(user.name, user.email, user.cart, user._id);
 			req.user = user;
