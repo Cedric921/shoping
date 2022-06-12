@@ -1,3 +1,4 @@
+const { response } = require('express');
 const User = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
@@ -17,8 +18,13 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postLogin = (req, res, next) => {
-	User.findById('62a4520bfa2e37e0ecde2a63')
+	const email = req.body.email;
+	const password = req.body.password;
+	User.findOne({ email: email })
 		.then((user) => {
+			if (!user) {
+				return res.redirect('/login');
+			}
 			req.session.isLoggedIn = true;
 			req.session.user = user;
 			console.log(req.session);
@@ -37,12 +43,17 @@ exports.postSignup = (req, res, next) => {
 	User.findOne({ email: email })
 		.then((userDoc) => {
 			if (userDoc) {
-				return res.render('/login');
+				return res.render('/signup');
 			}
 			const user = new User({
 				email: email,
 				password: password,
+				cart: { items: [] },
 			});
+			return user.save();
+		})
+		.then((result) => {
+			res.redirect('/login');
 		})
 		.catch((err) => console.log(err));
 };

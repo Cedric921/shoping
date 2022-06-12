@@ -186,6 +186,9 @@ img {
 .card__header,
 .card__content {
 	padding: 1rem;
+	display: flex;
+	justify-content: center;
+	color: rgb(58, 58, 58);
 }
 
 .card__header h1,

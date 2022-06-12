@@ -50,7 +50,7 @@ app.use((req, res, next) => {
 
 //first we look for a user for all routes
 app.use((req, res, next) => {
-	User.findById('62a4520bfa2e37e0ecde2a63')
+	User.findById('62a642caebc04d077db84ce6')
 		.then((user) => {
 			req.user = user;
 			next();
@@ -68,20 +68,7 @@ app.use(notFoundController.get404Page);
 mongoose
 	.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 	.then(() => {
-		User.findOne().then((user) => {
-			if (!user) {
-				const user = new User({
-					name: 'cedric vb',
-					email: 'vb@test.com',
-					cart: {
-						items: [],
-					},
-				});
-				user.save();
-			}
-		});
 		console.log('mongodb is connected');
-
 		app.listen(3000);
 	})
 	.catch((error) => {
