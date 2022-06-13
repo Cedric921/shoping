@@ -3,6 +3,8 @@ const path = require('path');
 
 const router = express.Router();
 const shopController = require('../controllers/shop');
+//middleware
+const isAuth = require('../middleware/gard');
 
 // / => GET public
 router.get('/', shopController.getIndex);
@@ -14,7 +16,7 @@ router.get('/products', shopController.getProducts);
 router.get('/products/:productId', shopController.getProductsById);
 
 // /cart => GET public
-router.get('/cart', shopController.getCart);
+router.get('/cart',isAuth, shopController.getCart);
 
 // /cart => POST private
 router.post('/cart', shopController.postCart);

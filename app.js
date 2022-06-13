@@ -22,6 +22,7 @@ const authRoutes = require('./routes/auth.js');
 //user model
 const User = require('./models/user');
 
+
 //controllers
 const notFoundController = require('./controllers/404');
 
