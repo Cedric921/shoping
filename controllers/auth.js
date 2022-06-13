@@ -25,13 +25,21 @@ exports.postLogin = (req, res, next) => {
 			if (!user) {
 				return res.redirect('/login');
 			}
-			req.session.isLoggedIn = true;
-			req.session.user = user;
-			console.log(req.session);
-			req.session.save((error) => {
-				console.log(error);
-				res.redirect('/');
-			});
+
+			bcrypt
+				.compare(password, user.password)
+				.then((pwdMatch) => {
+					if (pwdMatch) {
+						req.session.isLoggedIn = true;
+						req.session.user = user;
+						req.session.save((error) => {
+							console.log(error);
+							return res.redirect('/');
+						});
+					}
+					res.redirect('/login');
+				})
+				.catch((err) => console.log(err));
 		})
 		.catch((err) => console.log(err));
 };
@@ -45,18 +53,19 @@ exports.postSignup = (req, res, next) => {
 			if (userDoc) {
 				return res.render('/signup');
 			}
-			return bcrypt.hash(password, 12);
-		})
-		.then((hashedPassword) => {
-			const user = new User({
-				email: email,
-				password: hashedPassword,
-				cart: { items: [] },
-			});
-			return user.save();
-		})
-		.then((result) => {
-			res.redirect('/login');
+			return bcrypt
+				.hash(password, 12)
+				.then((hashedPassword) => {
+					const user = new User({
+						email: email,
+						password: hashedPassword,
+						cart: { items: [] },
+					});
+					return user.save();
+				})
+				.then((result) => {
+					res.redirect('/login');
+				});
 		})
 		.catch((err) => console.log(err));
 };

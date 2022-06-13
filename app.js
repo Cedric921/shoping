@@ -48,16 +48,6 @@ app.use((req, res, next) => {
 		.catch((err) => console.log(err));
 });
 
-//first we look for a user for all routes
-// app.use((req, res, next) => {
-// 	User.findById('62a6cdeab202d5cbaf5481bc')
-// 		.then((user) => {
-// 			req.user = user;
-// 			next();
-// 		})
-// 		.catch((error) => console.log(error));
-// });
-
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
