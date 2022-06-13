@@ -9,7 +9,7 @@ exports.getProducts = (req, res, next) => {
 				prods: products,
 				pageTitle: 'All products',
 				path: '/products',
-				isAuthenticated: req.isLoggedIn,
+				isAuthenticated: req.session.isLoggedIn,
 			});
 		})
 		.catch((error) => console.error(error));
@@ -24,7 +24,7 @@ exports.getProductsById = (req, res, next) => {
 				product: product,
 				pageTitle: product.title,
 				path: '/product-detail/' + product.id,
-				isAuthenticated: req.isLoggedIn,
+				isAuthenticated: req.session.isLoggedIn,
 			});
 		})
 		.catch((error) => console.error(error));
@@ -37,7 +37,7 @@ exports.getIndex = (req, res, next) => {
 				prods: products,
 				pageTitle: 'Shop',
 				path: '/',
-				isAuthenticated: req.isLoggedIn,
+			
 			});
 		})
 		.catch((err) => {
@@ -55,7 +55,6 @@ exports.getCart = (req, res, next) => {
 				pageTitle: 'Your Cart',
 				path: '/cart',
 				products: products,
-				isAuthenticated: req.isLoggedIn,
 			});
 		})
 		.catch((error) => console.error(error));
@@ -76,9 +75,11 @@ exports.postCart = (req, res, next) => {
 
 exports.postCartDeleteProduct = (req, res, next) => {
 	const prodId = req.body.productId;
+	console.log('controller ', prodId);
 	req.user
 		.removeFromCart(prodId)
 		.then((result) => {
+			console.log(result);
 			res.redirect('/cart');
 		})
 		.catch((err) => console.error(err));
@@ -93,7 +94,7 @@ exports.postOrder = (req, res, next) => {
 			});
 			const order = new Order({
 				user: {
-					name: req.user.name,
+					email: req.user.email,
 					userId: req.user,
 				},
 				products: products,
@@ -103,7 +104,7 @@ exports.postOrder = (req, res, next) => {
 		.then((response) => {
 			return req.user.clearCart();
 		})
-		.then((res) => {
+		.then((result) => {
 			res.redirect('/orders');
 		})
 		.catch((error) => console.error(error));
@@ -116,7 +117,7 @@ exports.getOrders = (req, res, next) => {
 				pageTitle: 'Your Orders',
 				path: '/orders',
 				orders: orders,
-				isAuthenticated: req.isLoggedIn,
+				
 			});
 		})
 		.catch((err) => console.error(err));

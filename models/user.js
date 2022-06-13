@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-	name: {
+	email: {
 		type: String,
 		required: true,
 	},
-	email: {
+	password: {
 		type: String,
 		required: true,
 	},
@@ -54,10 +54,12 @@ userSchema.methods.addToCart = function (product) {
 };
 
 userSchema.methods.removeFromCart = function (productId) {
+	console.log('method', productId);
 	const updatedCartItems = this.cart.items.filter((item) => {
-		return item.productId.toString() !== productId.toString();
+		return item._id.toString() !== productId.toString();
 	});
 	this.cart.items = updatedCartItems;
+	console.log('method', this.cart.items);
 	return this.save();
 };
 userSchema.methods.clearCart = function () {
