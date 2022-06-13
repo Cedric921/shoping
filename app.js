@@ -53,6 +53,16 @@ app.use((req, res, next) => {
 		.catch((err) => console.log(err));
 });
 
+/** for csrf token and
+ * 	inject this data to all views
+ *
+ * */
+app.use((req, res, next) => {
+	res.locals.isAuthenticated = req.session.isLoggedIn;
+	res.locals.csrfToken = req.csrfToken();
+	next();
+});
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
