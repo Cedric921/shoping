@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const csrf = require('csurf');
 
 const MONGODB_URI = 'mongodb://localhost:27017/shop';
 
@@ -13,6 +14,8 @@ const store = new MongoDBStore({
 	collection: 'sessions',
 });
 
+const csrfProtection = csrf();
+
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
@@ -21,7 +24,6 @@ const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth.js');
 //user model
 const User = require('./models/user');
-
 
 //controllers
 const notFoundController = require('./controllers/404');
@@ -36,6 +38,8 @@ app.use(
 		store: store,
 	})
 );
+
+app.use(csrfProtection);
 
 app.use((req, res, next) => {
 	if (!req.session.user) {

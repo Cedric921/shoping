@@ -5,6 +5,7 @@ exports.getLogin = (req, res, next) => {
 	res.render('auth/login', {
 		pageTitle: 'Login',
 		path: '/login',
+		csrfToken: req.csrfToken(),
 		isAuthenticated: false,
 	});
 };
@@ -13,6 +14,7 @@ exports.getSignup = (req, res, next) => {
 	res.render('auth/signup', {
 		pageTitle: 'Signup',
 		path: '/signup',
+		csrfToken: req.csrfToken(),
 		isAuthenticated: false,
 	});
 };
