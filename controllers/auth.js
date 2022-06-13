@@ -32,9 +32,9 @@ exports.postLogin = (req, res, next) => {
 					if (pwdMatch) {
 						req.session.isLoggedIn = true;
 						req.session.user = user;
-						req.session.save((error) => {
+						return req.session.save((error) => {
 							console.log(error);
-							return res.redirect('/');
+							res.redirect('/');
 						});
 					}
 					res.redirect('/login');
