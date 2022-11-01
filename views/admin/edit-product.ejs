@@ -25,10 +25,22 @@
                 <textarea type="text" name="descriptions" id="description" rows="5"><% if (editing) {%><%= product.description %><% } %> </textarea>
             </div>
             <% if(editing) {%>
+                <!--  -->
                 <input type="hidden" name="productId" value="<%= product.id %>">
-                <% } %>
+                <!--  -->
+            <% } %>
 
-            <button class="btn" type="submit"><% if(editing) {%>Edit Product<% } else {%>Add product<% }%></button>
+			<input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+            <button class="btn" type="submit">
+                <!--  -->
+                <% if(editing) {%>
+                    Edit Product
+                <% } else {%>
+                    Add product
+                <% }%>
+                <!--  -->
+            </button>
         </form>
     </main>
 <%- include('../includes/end.ejs')%>

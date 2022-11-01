@@ -1,6 +1,17 @@
-.login-form, .product-form {
-  width: 20rem;
-  max-width: 90%;
-  margin: auto;
-  display: block;
+.login-form,
+.product-form {
+	width: 20rem;
+	max-width: 90%;
+	margin: auto;
+	display: block;
 }
+
+.error {
+	border: 2px solid red;
+	color: red;
+	background-color: #ff000031;
+	padding: 20px;
+	border-radius: 5px;
+	text-align: center;
+}
+ 

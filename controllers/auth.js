@@ -2,19 +2,23 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
+	let message = req.flash('error');
+	message = message[0] ?? null;
 	res.render('auth/login', {
 		pageTitle: 'Login',
 		path: '/login',
-		isAuthenticated: false,
+		errorMessage: message,
 	});
 };
 
 exports.getSignup = (req, res, next) => {
+	let message = req.flash('error');
+	message = message[0] ?? null;
 	res.render('auth/signup', {
 		pageTitle: 'Signup',
 		path: '/signup',
 		csrfToken: req.csrfToken(),
-		isAuthenticated: false,
+		errorMessage: message,
 	});
 };
 
@@ -24,6 +28,7 @@ exports.postLogin = (req, res, next) => {
 	User.findOne({ email: email })
 		.then((user) => {
 			if (!user) {
+				req.flash('error', 'Invalid email or password');
 				return res.redirect('/login');
 			}
 
@@ -49,11 +54,17 @@ exports.postSignup = (req, res, next) => {
 	const email = req.body.email;
 	const password = req.body.password;
 	const confirmPassword = req.body.confirmPassword;
+	if (password !== confirmPassword) {
+		req.flash('error', 'Passwords dont match');
+		return res.redirect('/signup');
+	}
 	User.findOne({ email: email })
 		.then((userDoc) => {
 			if (userDoc) {
-				return res.render('/signup');
+				req.flash('error', 'Email already exist');
+				return res.redirect('/signup');
 			}
+
 			return bcrypt
 				.hash(password, 12)
 				.then((hashedPassword) => {
